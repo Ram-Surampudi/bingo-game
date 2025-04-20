@@ -1,38 +1,137 @@
-.App {
+.App{
+  margin: 20px;
+  margin-top: 40px;
+}
+
+*{
+  color: black;
+}
+
+table{
+  border-collapse:collapse;
+  width:300px;
+  height: 300px;
+  cursor: pointer;
+}
+.table{
+  border-collapse:collapse;
+  width: auto;
+  height: auto;
+}
+
+.table > tbody > tr:first-child{
+  border:1px solid #ddd;
+  padding:5px;
+  text-align: center;
+  height: 10px;
+}
+.table > tbody > tr >td{
+  border:1px solid #ddd;
+  padding:5px;
+  text-align: center;
+  min-width: 30px;
+  height: 10px;
+}
+
+th,td{
+  border:1px solid #ddd;
+  padding:5px;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.crossed{
+  background-color: rgb(209, 88, 88);
   color: white;
+  cursor: not-allowed;
 }
 
-.App-link {
-  color: #61dafb;
+.uncrossed{
+  background-color: yellow;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.marked{
+  background-color: rgb(88, 209, 88);
+  color: white;
+  cursor: not-allowed;
 }
+.button{
+  background-color: rgb(186, 24, 62);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.section{
+  position: relative;
+  margin: 5px;
+  max-width: 300px;
+}
+
+.outterloading{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+
+.loader {
+  width: 60px;
+  aspect-ratio: 1;
+  color: #000;
+  border: 10px solid;
+  box-sizing: border-box;
+  border-radius: 50%;
+  animation: l6 2s infinite linear;
+  position: relative;
+}
+.loader:before {
+  content: "";
+  position: absolute;
+  height: 20px;
+  inset: auto calc(50% - 10px) 100%;
+  border-radius: 5px 5px 0 0;
+  background: 
+    linear-gradient(currentColor 0 0) top/100% 30%,
+    linear-gradient(currentColor 0 0) top/50% 100%;
+  background-repeat: no-repeat;
+}
+.loader:after {
+  content: "";
+  position: absolute;
+  inset: -8px -10px auto;
+  height: 15px;
+  background: 
+    radial-gradient(farthest-side,currentColor 94%,#0000) left,
+    radial-gradient(farthest-side,currentColor 94%,#0000) right;
+  background-size: 15px 15px;
+  background-repeat: no-repeat;
+}
+@keyframes l6 {
+  0%   {background: conic-gradient(#77a4bd 0     ,#0000 0)}
+  12.5%{background: conic-gradient(#77a4bd 45deg ,#0000 46deg)}
+  25%  {background: conic-gradient(#77a4bd 90deg ,#0000 91deg)}
+  37.5%{background: conic-gradient(#77a4bd 135deg,#0000 136deg)}
+  50%  {background: conic-gradient(#77a4bd 180deg,#0000 181deg)}
+  62.5%{background: conic-gradient(#77a4bd 225deg,#0000 226deg)}
+  75%  {background: conic-gradient(#77a4bd 270deg,#0000 271deg)}
+  87.5%{background: conic-gradient(#77a4bd 315deg,#0000 316deg)}
+  100% {background: conic-gradient(#77a4bd 360deg,#0000 360deg)}
+}
+
+.tablesblock{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
