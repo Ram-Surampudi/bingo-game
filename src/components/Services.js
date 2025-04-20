@@ -31,29 +31,57 @@ export function getMat() {
     for(let i =0; i<5; i++){
         for(j =0; j<5 && visted[user[i][j]]; j++);
         if(j === 5){
-          for(j =0; j<5 && b; j++)  visted[user[i][j]] = 'c';
+          if(b)for(j =0; j<5; j++)  visted[user[i][j]] = 'c';
           count++;
         }
         for(j =0; j<5 && visted[user[j][i]]; j++);
         if(j === 5){
-          for(j =0; j<5 && b; j++) visted[user[j][i]] = 'c';
+          if(b)for(j =0; j<5; j++) visted[user[j][i]] = 'c';
           count++;
         }
     }
 
     for(j =0; j<5 && visted[user[j][j]]; j++);
     if(j === 5){
-      for(j =0; j<5 && b; j++) visted[user[j][j]] = 'c';
+      if(b) for(j =0; j<5; j++) visted[user[j][j]] = 'c';
       count++;
     }
     
      for(j =0; j<5 && visted[user[j][4-j]]; j++);
      if(j === 5){
-      for(j =0; j<5 && b; j++) visted[user[j][4-j]] = 'c';
+      if(b)for(j =0; j<5; j++) visted[user[j][4-j]] = 'c';
       count++;
     }
     
      return count;
+ }
+
+ export function makeDecision(user, visted) {
+
+    let count =0, j =0, notVistedCount =0, tempCount1 =0, tempCount2 = 0;
+
+    for(let i =0; i<5; i++){
+      tempCount1 =0;
+      tempCount2 =0;
+        for(j =0; j<5; j++){
+          if(!visted[user[i][j]]) tempCount1++;
+          if(!visted[user[j][i]]) tempCount2++;
+        }
+        if(tempCount1 === 0) count++;
+        if(tempCount2 === 0) count++;
+
+        notVistedCount += tempCount1 + tempCount2;
+    }
+
+    for(j =0; j<5; j++){
+      if(!visted[user[j][j]]) tempCount1++;
+      if(!visted[user[j][4-j]]) tempCount2++;
+    }
+    if(tempCount1 === 0) count++;
+    if(tempCount2 === 0) count++;
+    notVistedCount += tempCount1 + tempCount2;
+    
+     return {count, notVistedCount};
  }
 
  export const getVal = () => new Array(26).fill('');
@@ -131,15 +159,20 @@ export function predict(computer, visted) {
       updateVal(two, tempcount2);
     }
 
-    let max = -1, predictedValue = -1;
+    let max = -1, predictedValue = -1, nvc = -1;
     
     for(let value of val){
       visted[value] = 'v';
-      count = isBingo(computer, visted, false);
+      let { count , notVistedCount} = makeDecision(computer, visted);
       visted[value] = '';
       if(max < count){
         max = count;
         predictedValue = value;
+        nvc = notVistedCount;
+      }
+      else if(max === count && notVistedCount < nvc){
+        predictedValue = value;
+        nvc = notVistedCount;
       }
     }
 
